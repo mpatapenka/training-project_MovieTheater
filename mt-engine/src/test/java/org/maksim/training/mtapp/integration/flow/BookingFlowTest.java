@@ -1,6 +1,5 @@
 package org.maksim.training.mtapp.integration.flow;
 
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,6 +2,5 @@ dependencies {
     compile project(':mt-api')
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
-    integrationTestCompile sourceSets.main.output
-    integrationTestCompile sourceSets.test.output
+    testCompile "org.projectlombok:lombok:${lombokVersion}"
 }
