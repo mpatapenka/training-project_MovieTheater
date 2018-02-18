@@ -1,0 +1,77 @@
+apply from: 'dependencies.gradle'
+
+allprojects {
+    task wrapper(type: Wrapper) { gradleVersion = '4.5.1' }
+}
+
+subprojects{
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'findbugs'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    dependencies {
+        compile "javax.annotation:jsr250-api:$javaxAnnotationsVersion"
+        compile "org.aspectj:aspectjweaver:$aspectjWeaverVersion"
+        compile "org.springframework:spring-context:$springVersion"
+        compile "com.google.guava:guava:$guavaVersion"
+        compile "org.slf4j:slf4j-api:$slf4jVersion"
+        compile "org.slf4j:slf4j-simple:$slf4jVersion"
+
+        testCompile "org.springframework:spring-test:$springVersion"
+        testCompile "junit:junit:$junitVersion"
+        testCompile "org.mockito:mockito-all:$mockitoVersion"
+        testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    }
+
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestCompileOnly.extendsFrom integrationTestCompile
+        integrationTestCompileOnly.extendsFrom testCompileOnly
+        integrationTestRuntime.extendsFrom testRuntime
+    }
+
+    sourceSets {
+        integrationTest {
+            java {
+                compileClasspath += main.output + test.output
+                runtimeClasspath += main.output + test.output
+                srcDir('src/integrationTest/java')
+            }
+            resources.srcDir('src/integrationTest/resources')
+        }
+    }
+
+    task integrationTest (type: Test) {
+        testClassesDir = sourceSets.integrationTest.output.classesDir
+        classpath = sourceSets.integrationTest.runtimeClasspath
+    }
+    integrationTest.mustRunAfter test
+    check.dependsOn(integrationTest)
+
+    jacoco {
+        toolVersion = "0.7.5+"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+            csv.enabled = true
+        }
+    }
+
+    idea {
+        module {
+            testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+            testSourceDirs += project.sourceSets.integrationTest.resources.srcDirs
+        }
+    }
+}

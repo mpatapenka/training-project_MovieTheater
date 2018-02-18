@@ -1,0 +1,13 @@
+ext {
+    javaxAnnotationsVersion = '1.0'
+    aspectjWeaverVersion = '1.8.10'
+    springVersion = '5.0.3.RELEASE'
+    guavaVersion = '24.0-jre'
+    slf4jVersion = '1.7.25'
+
+    lombokVersion = '1.16.20'
+
+    junitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    hamcrestVersion = '1.3'
+}
