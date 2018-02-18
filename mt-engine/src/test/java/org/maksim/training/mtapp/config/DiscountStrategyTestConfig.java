@@ -1,5 +1,6 @@
 package org.maksim.training.mtapp.config;
 
+import org.maksim.training.mtapp.service.annotation.DiscountStrategyQualifier;
 import org.maksim.training.mtapp.service.strategy.DiscountStrategy;
 import org.maksim.training.mtapp.service.strategy.discount.BirthdayDiscountStrategy;
 import org.maksim.training.mtapp.service.strategy.discount.TenthTicketDiscountStrategy;
@@ -12,11 +13,13 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 public class DiscountStrategyTestConfig {
     @Bean
+    @DiscountStrategyQualifier
     public DiscountStrategy tenthTicketStrategy(@Value("${strategy.tenthticket.discount}") byte discount) {
         return new TenthTicketDiscountStrategy(discount);
     }
 
     @Bean
+    @DiscountStrategyQualifier
     public DiscountStrategy birthdayStrategy(@Value("${strategy.birthday.dayswithinairdate}") long daysWithinAirDate,
                                              @Value("${strategy.birthday.discount}") byte discount) {
         return new BirthdayDiscountStrategy(daysWithinAirDate, discount);
