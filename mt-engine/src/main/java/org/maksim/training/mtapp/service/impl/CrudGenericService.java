@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.maksim.training.mtapp.repository.Repository;
 import org.maksim.training.mtapp.service.CrudService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ abstract class CrudGenericService<E, ID> implements CrudService<E, ID> {
     }
 
     @Override
+    @Transactional
     public E save(E item) {
         if (getId(item) == null) {
             getRepository().add(item);
@@ -30,6 +32,7 @@ abstract class CrudGenericService<E, ID> implements CrudService<E, ID> {
     }
 
     @Override
+    @Transactional
     public E remove(E item) {
         E retrieved = getById(getId(item));
         if (retrieved != null) {

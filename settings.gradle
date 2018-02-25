@@ -1,5 +1,4 @@
 rootProject.name = 'MovieTheater'
 
-include 'mt-model'
-include 'mt-api'
+include 'mt-core-api'
 include 'mt-engine'

@@ -1,6 +1,5 @@
 dependencies {
-    compile project(':mt-api')
-    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    compile project(':mt-core-api')
 
     testCompile "org.projectlombok:lombok:${lombokVersion}"
 }

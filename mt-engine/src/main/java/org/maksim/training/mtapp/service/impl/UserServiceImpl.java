@@ -9,6 +9,7 @@ import org.maksim.training.mtapp.repository.specification.user.UserByIdSpecifica
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.concurrent.locks.Lock;
@@ -25,6 +26,7 @@ public class UserServiceImpl extends CrudGenericService<User, Long> implements U
     }
 
     @Override
+    @Transactional
     public User save(User user) {
         if (user.getEmail() == null) {
             log.error("User is not eligible to be saved: {}.", user);
@@ -56,16 +58,19 @@ public class UserServiceImpl extends CrudGenericService<User, Long> implements U
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getById(Long id) {
         return findOne(getRepository().query(new UserByIdSpecification(id)));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByEmail(String email) {
         return findOne(getRepository().query(new UserByEmailSpecification(email)));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<User> getAll() {
         return getRepository().query(new AllUsersSpecification());
     }

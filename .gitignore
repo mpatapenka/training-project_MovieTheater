@@ -4,5 +4,6 @@
 target/
 out/
 build/
+other/
 
 !gradle-wrapper.jar

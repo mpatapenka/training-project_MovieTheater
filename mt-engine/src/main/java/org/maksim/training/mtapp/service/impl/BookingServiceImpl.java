@@ -10,12 +10,12 @@ import org.maksim.training.mtapp.repository.TicketRepository;
 import org.maksim.training.mtapp.repository.specification.ticket.TicketsByEventAndDateTimeSpecification;
 import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.DiscountService;
-import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;
 import org.maksim.training.mtapp.service.util.PriceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -72,7 +72,7 @@ public class BookingServiceImpl implements BookingService {
 
     private BigDecimal getTicketPrice(Event event, LocalDateTime airDateTime, User user, int seat, int ticketNumber) {
         BigDecimal basePrice = calculateBasePrice(event);
-        boolean isVipSeat = event.getSeances().get(airDateTime).countVipSeats(Collections.singleton(seat)) > 0;
+        boolean isVipSeat = event.getAuditorium(airDateTime).countVipSeats(Collections.singleton(seat)) > 0;
         byte discount = discountService.getDiscount(user, event, airDateTime, ticketNumber);
 
         BigDecimal overallPrice = isVipSeat
@@ -95,6 +95,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public void bookTickets(Collection<Ticket> tickets) {
         tickets.stream()
                 .filter(ticket -> ticket.getUser() != null && !UserRole.ANONYMOUS.equals(ticket.getUser().getRole()))
@@ -106,6 +107,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Collection<Ticket> getPurchasedTicketsForEvent(Event event, LocalDateTime dateTime) {
         return ticketRepository.query(new TicketsByEventAndDateTimeSpecification(event, dateTime));
     }

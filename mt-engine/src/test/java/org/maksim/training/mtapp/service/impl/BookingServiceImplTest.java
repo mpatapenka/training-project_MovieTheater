@@ -2,25 +2,23 @@ package org.maksim.training.mtapp.service.impl;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.maksim.training.mtapp.entity.Auditorium;
 import org.maksim.training.mtapp.entity.Event;
 import org.maksim.training.mtapp.entity.EventRating;
+import org.maksim.training.mtapp.entity.Seance;
 import org.maksim.training.mtapp.entity.Ticket;
 import org.maksim.training.mtapp.entity.User;
 import org.maksim.training.mtapp.repository.TicketRepository;
 import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.DiscountService;
-import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -144,7 +142,7 @@ public class BookingServiceImplTest {
 
     private Event createStubEvent(LocalDateTime airDateTime, EventRating rating) {
         Event event = Event.builder().basePrice(basePrice).rating(rating).build();
-        event.getSeances().put(airDateTime, mockAuditorium);
+        event.getSeances().add(Seance.builder().dateTime(airDateTime).auditorium(mockAuditorium).build());
         return event;
     }
 }
