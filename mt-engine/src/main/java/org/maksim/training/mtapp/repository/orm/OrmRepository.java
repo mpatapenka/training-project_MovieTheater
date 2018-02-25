@@ -26,7 +26,6 @@ abstract class OrmRepository<T> implements Repository<T> {
         int i = 1;
         for (T item : items) {
             em.persist(item);
-            log.debug("Iteration {}", i);
             if (i++ % DEFAULT_BATCH_SIZE == 0) {
                 log.debug("Flushing on iteration {}", i - 1);
                 em.flush();

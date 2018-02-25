@@ -14,6 +14,8 @@ import org.maksim.training.mtapp.entity.User;
 import org.maksim.training.mtapp.entity.UserRole;
 import org.maksim.training.mtapp.service.AuditoriumService;
 import org.maksim.training.mtapp.service.BookingService;
+import org.maksim.training.mtapp.service.CounterService;
+import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class BookingFlowTest {
     private EventService eventService;
     @Autowired
     private AuditoriumService auditoriumService;
+    @Autowired
+    private CounterService counterService;
 
     @Before
     public void before() {
@@ -75,7 +79,7 @@ public class BookingFlowTest {
                 LocalDateTime.of(LocalDate.now().getYear(), Month.MAY, 16, 0, 0));
         log.info("Events for date range: {}", events);
 
-        Event eventToGo = events.get(0);
+        Event eventToGo = eventService.getByName(events.get(0).getName());
         log.info("Choose event: {}", eventToGo);
 
         Seance seance = eventToGo.getSeances().last();
@@ -101,5 +105,11 @@ public class BookingFlowTest {
         log.info("All purchased tickets for event: {}", purchasedTicketsForEvent);
 
         assertEquals(10, purchasedTicketsForEvent.size());
+        assertEquals(10, counterService.getBookTimesForEventCount(eventToGo.getName()));
+        assertEquals(1, counterService.getEventByNameCount(eventToGo.getName()));
+        assertEquals(2, counterService.getOverallDiscountCount(DiscountService.FIFTY_PERCENTAGE_DISCOUNT));
+        assertEquals(18, counterService.getOverallDiscountCount(DiscountService.FIVE_PERCENTAGE_DISCOUNT));
+        assertEquals(2, counterService.getDiscountForUserCount(meRegistered.getEmail(), DiscountService.FIFTY_PERCENTAGE_DISCOUNT));
+        assertEquals(18, counterService.getDiscountForUserCount(meRegistered.getEmail(), DiscountService.FIVE_PERCENTAGE_DISCOUNT));
     }
 }

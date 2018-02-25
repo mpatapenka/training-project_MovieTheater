@@ -27,8 +27,8 @@ public class BirthdayDiscountStrategy implements DiscountStrategy {
     @Override
     public byte calculateDiscount(User user, Event event, LocalDateTime airDateTime, int numberOfTicket) {
         if (user != null && user.getBirthday() != null
-                && user.getBirthday().isAfter(airDateTime.minusDays(daysWithinAirDate).toLocalDate())
-                && user.getBirthday().isBefore(airDateTime.plusDays(daysWithinAirDate).toLocalDate())) {
+                && user.getBirthday().withYear(airDateTime.getYear()).compareTo(airDateTime.minusDays(daysWithinAirDate).toLocalDate()) >= 0
+                && user.getBirthday().withYear(airDateTime.getYear()).compareTo(airDateTime.plusDays(daysWithinAirDate).toLocalDate()) <= 0) {
             return discount;
         }
         return DiscountService.NO_DISCOUNT;

@@ -1,106 +1,114 @@
 package org.maksim.training.mtapp.service.impl;
 
-import com.google.common.collect.Maps;
+import org.maksim.training.mtapp.entity.Counter;
+import org.maksim.training.mtapp.repository.CounterRepository;
+import org.maksim.training.mtapp.repository.specification.counter.CounterByDomainAndIdentifierSpecification;
 import org.maksim.training.mtapp.service.CounterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class CounterServiceImpl implements CounterService {
-    private final ReadWriteLock eventNameLock = new ReentrantReadWriteLock();
-    private final ReadWriteLock bookTimesLock = new ReentrantReadWriteLock();
-    private final ReadWriteLock discountsLock = new ReentrantReadWriteLock();
+    private static final String EVENT_BY_NAME_DOMAIN = "EVENT_BY_NAME";
+    private static final String BOOK_TIMES_FOR_EVENT_DOMAIN = "BOOK_TIMES_FOR_EVENT";
+    private static final String DISCOUNT_PERCENTAGE_DOMAIN = "DISCOUNT_PERCENTAGE";
 
-    private final Map<String, AtomicLong> eventByNameAccesses = Maps.newConcurrentMap();
-    private final Map<String, AtomicLong> bookTimesForEvent = Maps.newConcurrentMap();
-    private final Map<CompositeKey, AtomicLong> usersDiscounts = Maps.newConcurrentMap();
-    private final Map<Byte, AtomicLong> overallDiscounts = Maps.newConcurrentMap();
+    private final Lock eventNameLock = new ReentrantLock();
+    private final Lock bookTimesLock = new ReentrantLock();
+    private final Lock discountsLock = new ReentrantLock();
+
+    private final CounterRepository counterRepository;
+
+    @Autowired
+    public CounterServiceImpl(CounterRepository counterRepository) {
+        this.counterRepository = counterRepository;
+    }
 
     @Override
+    @Transactional
     public void countEventByName(String name) {
-        safeIncrementCount(eventByNameAccesses, name, eventNameLock);
+        safeIncrementCount(EVENT_BY_NAME_DOMAIN, name, eventNameLock);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long getEventByNameCount(String name) {
-        return safeGetCount(eventByNameAccesses.get(name));
+        return safeGetCount(counterRepository
+                .query(new CounterByDomainAndIdentifierSpecification(EVENT_BY_NAME_DOMAIN, name)));
     }
 
     @Override
+    @Transactional
     public void countBookTimesForEvent(String name) {
-        safeIncrementCount(bookTimesForEvent, name, bookTimesLock);
+        safeIncrementCount(BOOK_TIMES_FOR_EVENT_DOMAIN, name, bookTimesLock);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long getBookTimesForEventCount(String name) {
-        return safeGetCount(bookTimesForEvent.get(name));
+        return safeGetCount(counterRepository
+                .query(new CounterByDomainAndIdentifierSpecification(BOOK_TIMES_FOR_EVENT_DOMAIN, name)));
     }
 
     @Override
+    @Transactional
     public void countDiscountForUser(String email, byte discount) {
-        safeIncrementCount(usersDiscounts, new CompositeKey(email, discount), discountsLock);
-        safeIncrementCount(overallDiscounts, discount, discountsLock);
+        String identifier = email + ":" + discount;
+        safeIncrementCount(DISCOUNT_PERCENTAGE_DOMAIN, identifier, discountsLock);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long getDiscountForUserCount(String email, byte discount) {
-        return safeGetCount(usersDiscounts.get(new CompositeKey(email, discount)));
+        String identifier = email + ":" + discount;
+        return safeGetCount(counterRepository
+                .query(new CounterByDomainAndIdentifierSpecification(DISCOUNT_PERCENTAGE_DOMAIN, identifier)));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long getOverallDiscountCount(byte discount) {
-        return safeGetCount(overallDiscounts.get(discount));
+        String identifier = ":" + discount;
+        return safeGetCount(counterRepository
+                .query(new CounterByDomainAndIdentifierSpecification(DISCOUNT_PERCENTAGE_DOMAIN, identifier)));
     }
 
-    private final class CompositeKey {
-        private final String stringKey;
-        private final byte byteKey;
-
-        private final int hash;
-
-        private CompositeKey(String stringKey, byte byteKey) {
-            this.stringKey = stringKey;
-            this.byteKey = byteKey;
-            this.hash = Objects.hash(this.stringKey, this.byteKey);
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            CompositeKey that = (CompositeKey) o;
-            return byteKey == that.byteKey
-                    && Objects.equals(stringKey, that.stringKey);
-        }
-
-        @Override
-        public int hashCode() {
-            return hash;
-        }
-    }
-
-    private long safeGetCount(AtomicLong count) {
-        if (count != null) {
-            return count.get();
+    private long safeGetCount(List<Counter> counters) {
+        if (counters != null && !counters.isEmpty()) {
+            return counters.get(0).getCount().longValue();
         }
         return 0;
     }
 
-    private <K> void safeIncrementCount(Map<K, AtomicLong> counters, K key, ReadWriteLock lock) {
-        AtomicLong count = counters.get(key);
-        if (count == null) {
-            lock.writeLock().lock();
-            if ((count = counters.get(key)) == null) {
-                count = new AtomicLong(0);
-                counters.put(key, count);
+    private void safeIncrementCount(String domain, String identifier, Lock lock) {
+        lock.lock();
+        try {
+            List<Counter> counters = counterRepository
+                    .query(new CounterByDomainAndIdentifierSpecification(domain, identifier));
+            boolean isNew = counters.isEmpty();
+            Counter required = !isNew
+                    ? counters.get(0)
+                    : Counter.builder()
+                            .domain(domain)
+                            .identifier(identifier)
+                            .count(new AtomicLong(0))
+                            .build();
+
+            required.getCount().incrementAndGet();
+
+            if (isNew) {
+                counterRepository.add(required);
+            } else {
+                counterRepository.update(required);
             }
-            lock.writeLock().unlock();
+        } finally {
+            lock.unlock();
         }
-        count.incrementAndGet();
     }
 }
