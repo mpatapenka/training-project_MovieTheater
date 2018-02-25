@@ -1,3 +1,24 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+
+war {
+    baseName = 'mt-app-web'
+    version = '0.1.0'
+}
+
 dependencies {
     compile project(':mt-engine')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile 'org.springframework.boot:spring-boot-starter-jetty'
 }

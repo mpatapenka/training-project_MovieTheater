@@ -1,16 +1,18 @@
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'findbugs'
 apply from: 'dependencies.gradle'
 
 allprojects {
     task wrapper(type: Wrapper) { gradleVersion = '4.5.1' }
 }
 
-subprojects{
+subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
-    apply plugin: 'findbugs'
-    apply plugin: 'idea'
 
-    sourceCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     repositories {
         mavenLocal()
@@ -29,7 +31,7 @@ subprojects{
         compile "com.google.guava:guava:$guavaVersion"
         compile "org.apache.commons:commons-lang3:$apacheLangVersion"
         compile "org.slf4j:slf4j-api:$slf4jVersion"
-        compile "org.slf4j:slf4j-simple:$slf4jVersion"
+//        compile "org.slf4j:slf4j-simple:$slf4jVersion"
 
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
 

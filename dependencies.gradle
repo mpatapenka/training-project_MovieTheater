@@ -2,6 +2,7 @@ ext {
     javaxAnnotationsVersion = '1.0'
     aspectjWeaverVersion = '1.8.10'
     springVersion = '5.0.3.RELEASE'
+    springBootVersion = '1.5.10.RELEASE'
     hibernateVersion = '5.2.13.Final'
     h2Version = '1.4.195'
     c3p0Version = '0.9.1.2'
