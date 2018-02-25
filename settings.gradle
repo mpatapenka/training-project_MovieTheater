@@ -2,3 +2,4 @@ rootProject.name = 'MovieTheater'
 
 include 'mt-core-api'
 include 'mt-engine'
+include 'mt-web'
