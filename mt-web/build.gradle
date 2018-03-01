@@ -11,14 +11,26 @@ buildscript {
 apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
 
+def bootMainClassName = 'org.maksim.training.mtapp.Application'
+
 war {
-    baseName = 'mt-app-web'
-    version = '0.1.0'
+    manifest {
+        attributes 'Main-Class': bootMainClassName
+    }
+}
+
+springBoot {
+    mainClass = bootMainClassName
+}
+
+configurations {
+    providedRuntime
 }
 
 dependencies {
     compile project(':mt-engine')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-jetty'
 }

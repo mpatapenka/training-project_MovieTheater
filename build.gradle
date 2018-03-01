@@ -1,3 +1,15 @@
+buildscript {
+    apply from: 'dependencies.gradle'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:$springDependencyPluginVersion")
+    }
+}
+
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'findbugs'
@@ -10,6 +22,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: "io.spring.dependency-management"
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -19,26 +32,37 @@ subprojects {
         jcenter()
     }
 
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:Brussels-SR7'
+        }
+    }
+
     dependencies {
-        compile "javax.annotation:jsr250-api:$javaxAnnotationsVersion"
-        compile "org.aspectj:aspectjweaver:$aspectjWeaverVersion"
-        compile "org.springframework:spring-context:$springVersion"
-        compile "org.springframework:spring-tx:$springVersion"
-        compile "org.springframework:spring-orm:$springVersion"
-        compile "org.hibernate:hibernate-entitymanager:$hibernateVersion"
-        compile "com.h2database:h2:$h2Version"
-        compile "c3p0:c3p0:$c3p0Version"
-        compile "com.google.guava:guava:$guavaVersion"
-        compile "org.apache.commons:commons-lang3:$apacheLangVersion"
-        compile "org.slf4j:slf4j-api:$slf4jVersion"
-//        compile "org.slf4j:slf4j-simple:$slf4jVersion"
+        compile "org.springframework:spring-context"
+        compile "org.springframework:spring-tx"
+        compile "org.springframework:spring-orm"
 
-        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        compile "javax.annotation:jsr250-api"
+        compile "org.aspectj:aspectjweaver"
+        compile "org.hibernate:hibernate-entitymanager"
+        compile "com.h2database:h2"
+        compile "com.mchange:c3p0"
+        compile "org.slf4j:slf4j-api"
+        compile "org.slf4j:jcl-over-slf4j"
+//        compile "org.slf4j:slf4j-simple"
 
-        testCompile "org.springframework:spring-test:$springVersion"
-        testCompile "junit:junit:$junitVersion"
+        compile "com.google.guava:guava"
+        compile "org.apache.commons:commons-lang3"
+
+
+        compileOnly "org.projectlombok:lombok"
+
+
+        testCompile "org.springframework:spring-test"
+        testCompile "junit:junit"
         testCompile "org.mockito:mockito-all:$mockitoVersion"
-        testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"
+        testCompile "org.hamcrest:hamcrest-all"
     }
 
     jacoco {

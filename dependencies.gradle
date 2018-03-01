@@ -1,4 +1,6 @@
 ext {
+    springDependencyPluginVersion = '1.0.4.RELEASE'
+
     javaxAnnotationsVersion = '1.0'
     aspectjWeaverVersion = '1.8.10'
     springVersion = '5.0.3.RELEASE'

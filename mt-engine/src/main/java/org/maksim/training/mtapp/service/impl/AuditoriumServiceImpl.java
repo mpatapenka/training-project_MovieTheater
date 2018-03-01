@@ -65,7 +65,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
 
     @SneakyThrows
     private Properties readAuditoriumsDirectory() {
-        URL auditoriumSystemResource = ClassLoader.getSystemResource(auditoriumsDir);
+        URL auditoriumSystemResource = auditoriumsDir.startsWith(".")
+                ? Paths.get(auditoriumsDir).toUri().toURL()
+                : ClassLoader.getSystemResource(auditoriumsDir);
         Preconditions.checkNotNull(auditoriumSystemResource, "Directory " + auditoriumsDir + " not found.");
         Path auditoriumsPath = Paths.get(auditoriumSystemResource.toURI());
         try {
