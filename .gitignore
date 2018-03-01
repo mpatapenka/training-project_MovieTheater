@@ -1,4 +1,8 @@
 *.jar
+*.iml
+*.ipr
+*.iws
+
 .gradle/
 .idea/
 target/
