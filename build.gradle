@@ -1,79 +1,105 @@
 buildscript {
-    apply from: 'dependencies.gradle'
+    ext {
+        springDependencyPluginVersion = '1.0.4.RELEASE'
+        springBootVersion = '1.5.10.RELEASE'
+    }
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
         classpath("io.spring.gradle:dependency-management-plugin:$springDependencyPluginVersion")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
     }
+}
+
+ext {
+    mockitoVersion = '1.10.19'
 }
 
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'findbugs'
-apply from: 'dependencies.gradle'
+apply plugin: 'jacoco'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'java'
+apply plugin: 'war'
 
-allprojects {
-    task wrapper(type: Wrapper) { gradleVersion = '4.5.1' }
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenLocal()
+    jcenter()
 }
 
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'jacoco'
-    apply plugin: "io.spring.dependency-management"
-
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
-    repositories {
-        mavenLocal()
-        jcenter()
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:Brussels-SR7'
     }
+}
 
-    dependencyManagement {
-        imports {
-            mavenBom 'io.spring.platform:platform-bom:Brussels-SR7'
-        }
+configurations {
+    providedRuntime
+}
+
+dependencies {
+    compile "org.springframework:spring-context"
+    compile "org.springframework:spring-tx"
+    compile "org.springframework:spring-orm"
+
+    compile "javax.annotation:jsr250-api"
+    compile "org.aspectj:aspectjweaver"
+    compile "org.hibernate:hibernate-entitymanager"
+    compile "com.h2database:h2"
+    compile "com.mchange:c3p0"
+    compile "org.slf4j:slf4j-api"
+
+    compile "com.google.guava:guava"
+    compile "org.apache.commons:commons-lang3"
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+    testCompile "org.springframework:spring-test"
+    testCompile "junit:junit"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all"
+
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-jetty'
+
+    compileOnly "org.projectlombok:lombok"
+    testCompileOnly "org.projectlombok:lombok"
+}
+
+def bootMainClassName = 'org.maksim.training.mtapp.Application'
+
+war {
+    manifest {
+        attributes 'Main-Class': bootMainClassName
     }
+}
 
-    dependencies {
-        compile "org.springframework:spring-context"
-        compile "org.springframework:spring-tx"
-        compile "org.springframework:spring-orm"
+springBoot {
+    mainClass = bootMainClassName
+}
 
-        compile "javax.annotation:jsr250-api"
-        compile "org.aspectj:aspectjweaver"
-        compile "org.hibernate:hibernate-entitymanager"
-        compile "com.h2database:h2"
-        compile "com.mchange:c3p0"
-        compile "org.slf4j:slf4j-api"
-        compile "org.slf4j:jcl-over-slf4j"
-//        compile "org.slf4j:slf4j-simple"
+jacoco {
+    toolVersion = "0.7.5+"
+}
 
-        compile "com.google.guava:guava"
-        compile "org.apache.commons:commons-lang3"
-
-
-        compileOnly "org.projectlombok:lombok"
-
-
-        testCompile "org.springframework:spring-test"
-        testCompile "junit:junit"
-        testCompile "org.mockito:mockito-all:$mockitoVersion"
-        testCompile "org.hamcrest:hamcrest-all"
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = true
     }
+}
 
-    jacoco {
-        toolVersion = "0.7.5+"
-    }
-
-    jacocoTestReport {
-        reports {
-            xml.enabled = true
-            html.enabled = true
-            csv.enabled = true
-        }
-    }
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5.1'
 }
