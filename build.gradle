@@ -47,36 +47,38 @@ configurations {
 }
 
 dependencies {
-    compile "org.springframework:spring-context"
-    compile "org.springframework:spring-tx"
-    compile "org.springframework:spring-orm"
+    compile 'org.springframework:spring-context'
+    compile 'org.springframework:spring-tx'
+    compile 'org.springframework:spring-orm'
 
-    compile "javax.annotation:jsr250-api"
-    compile "org.aspectj:aspectjweaver"
-    compile "org.hibernate:hibernate-entitymanager"
-    compile "com.h2database:h2"
-    compile "com.mchange:c3p0"
-    compile "org.slf4j:slf4j-api"
+    compile 'javax.annotation:jsr250-api'
+    compile 'org.aspectj:aspectjweaver'
+    compile 'org.hibernate:hibernate-entitymanager'
+    compile 'com.h2database:h2'
+    compile 'com.mchange:c3p0'
+    compile 'org.slf4j:slf4j-api'
 
-    compile "com.google.guava:guava"
-    compile "org.apache.commons:commons-lang3"
+    compile 'com.google.guava:guava'
+    compile 'org.apache.commons:commons-lang3'
+    compile 'commons-fileupload:commons-fileupload'
 
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
 
     compile "javax.xml.bind:jaxb-api:$jaxbVersion"
 
 
-    testCompile "org.springframework:spring-test"
-    testCompile "junit:junit"
+    testCompile 'org.springframework:spring-test'
+    testCompile 'junit:junit'
     testCompile "org.mockito:mockito-all:$mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all"
+    testCompile 'org.hamcrest:hamcrest-all'
 
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-jetty'
 
-    compileOnly "org.projectlombok:lombok"
-    testCompileOnly "org.projectlombok:lombok"
+    compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
 }
 
 def bootMainClassName = 'org.maksim.training.mtapp.Application'

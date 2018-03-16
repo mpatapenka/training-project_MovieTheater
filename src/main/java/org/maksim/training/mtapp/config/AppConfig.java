@@ -8,21 +8,21 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Random;
 
 @Configuration
 @EnableAspectJAutoProxy
-@EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 @ComponentScan({
         "org.maksim.training.mtapp.entity.converter",
         "org.maksim.training.mtapp.service",
-        "org.maksim.training.mtapp.web",
         "org.maksim.training.mtapp.aop"
 })
-@Import(PersistenceConfig.class)
+@Import({
+        PersistenceConfig.class,
+        WebConfig.class
+})
 public class AppConfig {
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
