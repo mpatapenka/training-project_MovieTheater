@@ -1,4 +1,4 @@
-package org.maksim.training.mtapp.web.advice;
+package org.maksim.training.mtapp.controller.advice;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

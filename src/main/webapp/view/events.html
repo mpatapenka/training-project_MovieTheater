@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <form action="#" th:action="@{/events}" method="get">
+        <input type="datetime-local" name="from" title="From:"/>
+        <input type="datetime-local" name="to" title="To:"/>
+        <input type="submit"/>
+    </form>
+    <h3>Events:</h3>
+    <div th:if="${events != null}">
+        <ul>
+            <li th:each="item : ${events}" th:text="${item}">Event description...</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maksim.training.mtapp.config.AppConfig;
+import org.maksim.training.mtapp.Application;
 import org.maksim.training.mtapp.entity.Auditorium;
 import org.maksim.training.mtapp.entity.Event;
 import org.maksim.training.mtapp.entity.EventRating;
@@ -19,6 +19,8 @@ import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -34,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
+@ContextConfiguration(classes = Application.class)
 @Slf4j
 public class BookingFlowTest {
     @Autowired

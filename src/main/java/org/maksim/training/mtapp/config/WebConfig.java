@@ -6,20 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("org.maksim.training.mtapp.web")
+@ComponentScan("org.maksim.training.mtapp.controller")
 public class WebConfig {
     @Bean
-    public ServletContextTemplateResolver thymeleafTemplateResolver() {
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+    public SpringResourceTemplateResolver thymeleafTemplateResolver() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setPrefix("/view/");
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         return templateResolver;
     }
 
@@ -34,7 +35,7 @@ public class WebConfig {
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setOrder(1);
+        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 

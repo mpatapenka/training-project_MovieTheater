@@ -4,12 +4,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maksim.training.mtapp.entity.Auditorium;
-import org.maksim.training.mtapp.entity.Event;
-import org.maksim.training.mtapp.entity.EventRating;
-import org.maksim.training.mtapp.entity.Seance;
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.entity.*;
 import org.maksim.training.mtapp.repository.TicketRepository;
 import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.DiscountService;
@@ -21,7 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.maksim.training.mtapp.service.DiscountService.FIFTY_PERCENTAGE_DISCOUNT;
 import static org.maksim.training.mtapp.service.DiscountService.NO_DISCOUNT;
 import static org.mockito.Matchers.any;
@@ -64,7 +59,7 @@ public class BookingServiceImplTest {
         Event event = createStubEvent(now, EventRating.MID);
         Set<Integer> seats = Sets.newHashSet(4, 5, 6);
 
-        assertTrue(new BigDecimal(300).compareTo(bookingService.getTicketsPrice(event, now, user, seats)) == 0);
+        assertEquals(0, new BigDecimal(300).compareTo(bookingService.getTicketsPrice(event, now, user, seats)));
     }
 
     @Test
@@ -75,7 +70,7 @@ public class BookingServiceImplTest {
         Event event = createStubEvent(now, EventRating.HIGH);
         Set<Integer> seats = Sets.newHashSet(4, 5, 6);
 
-        assertTrue(new BigDecimal(360).compareTo(bookingService.getTicketsPrice(event, now, user, seats)) == 0);
+        assertEquals(0, new BigDecimal(360).compareTo(bookingService.getTicketsPrice(event, now, user, seats)));
     }
 
     @Test
@@ -86,7 +81,7 @@ public class BookingServiceImplTest {
         Event event = createStubEvent(now, EventRating.LOW);
         Set<Integer> seats = Sets.newHashSet(4, 5, 6);
 
-        assertTrue(new BigDecimal(150).compareTo(bookingService.getTicketsPrice(event, now, user, seats)) == 0);
+        assertEquals(0, new BigDecimal(150).compareTo(bookingService.getTicketsPrice(event, now, user, seats)));
     }
 
     @Test
@@ -97,7 +92,7 @@ public class BookingServiceImplTest {
         Event event = createStubEvent(now, EventRating.HIGH);
         Set<Integer> seats = Sets.newHashSet(4, 5, 6);
 
-        assertTrue(new BigDecimal(180).compareTo(bookingService.getTicketsPrice(event, now, user, seats)) == 0);
+        assertEquals(0, new BigDecimal(180).compareTo(bookingService.getTicketsPrice(event, now, user, seats)));
     }
 
     @Test
@@ -108,7 +103,7 @@ public class BookingServiceImplTest {
         Event event = createStubEvent(now, EventRating.HIGH);
         Set<Integer> seats = Sets.newHashSet(3, 4, 5);
 
-        assertTrue(new BigDecimal(240).compareTo(bookingService.getTicketsPrice(event, now, user, seats)) == 0);
+        assertEquals(0, new BigDecimal(240).compareTo(bookingService.getTicketsPrice(event, now, user, seats)));
     }
 
     @Test
