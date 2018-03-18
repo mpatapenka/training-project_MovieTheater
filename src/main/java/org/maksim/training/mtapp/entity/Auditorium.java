@@ -1,9 +1,11 @@
 package org.maksim.training.mtapp.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Sets;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import org.maksim.training.mtapp.entity.serializer.json.AuditoriumDeserializer;
 
 import java.util.Collection;
 import java.util.Set;
@@ -12,6 +14,7 @@ import java.util.stream.IntStream;
 
 @Builder
 @Value
+@JsonDeserialize(using = AuditoriumDeserializer.class)
 public class Auditorium {
     String name;
     int numberOfSeats;

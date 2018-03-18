@@ -5,10 +5,8 @@ import org.maksim.training.mtapp.entity.Auditorium;
 import org.maksim.training.mtapp.service.AuditoriumService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.AttributeConverter;
@@ -18,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Converter
 @Component
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Slf4j
 public final class AuditoriumToNameConverter
         implements AttributeConverter<Auditorium, String>, ApplicationContextAware {
@@ -34,7 +31,7 @@ public final class AuditoriumToNameConverter
 
     @Override
     public String convertToDatabaseColumn(Auditorium auditorium) {
-        return auditorium.getName();
+        return auditorium != null ? auditorium.getName() : null;
     }
 
     @Override

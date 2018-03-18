@@ -12,9 +12,12 @@
     </form>
     <h3>Events:</h3>
     <div th:if="${events != null}">
-        <ul>
-            <li th:each="item : ${events}" th:text="${item}">Event description...</li>
-        </ul>
+        <div th:each="item : ${events}">
+            <a th:href="@{/events/{id}(id=${item.id})}">Select</a>
+            Name: <span th:text="${item.name}">Event Name...</span>,
+            Price: <span th:text="${item.basePrice}">Base Price...</span>,
+            Rating: <span th:text="${item.rating}">Rating...</span>
+        </div>
     </div>
 </body>
 </html>

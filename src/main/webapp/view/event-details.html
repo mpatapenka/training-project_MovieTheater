@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Event details</title>
+</head>
+<body>
+    <h3>Event: <span th:text="${event.name}">Event Name...</span></h3>
+    <h4>Price: <span th:text="${event.basePrice}">Base Price...</span>, Rating: <span th:text="${event.rating}">Rating...</span></h4>
+    <h3>Seances:</h3>
+    <div th:if="${event.seances != null}">
+        <div th:each="item : ${event.seances}">
+            <a th:href="@{/events/{eventId}/{dateTime}/seatmap(eventId=${event.id}, dateTime=${item.dateTime})}">Select</a>
+            Date time: <span th:text="${item.dateTime}">Date time...</span>,
+            Auditorium: <span th:text="${item.auditorium.name}">Auditorium name...</span>
+        </div>
+    </div>
+</body>
+</html>

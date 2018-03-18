@@ -27,7 +27,7 @@ public final class EventsByDateRangeSpecification
     @Override
     public TypedQuery<Event> toTypedQuery(EntityManager entityManager) {
         TypedQuery<Event> query = entityManager
-                .createQuery("SELECT e FROM Event e LEFT JOIN e.seances s WHERE s.dateTime BETWEEN :from AND :to", Event.class);
+                .createQuery("SELECT DISTINCT e FROM Event e INNER JOIN e.seances s WHERE s.dateTime BETWEEN :from AND :to", Event.class);
         query.setParameter("from", from);
         query.setParameter("to", to);
         return query;

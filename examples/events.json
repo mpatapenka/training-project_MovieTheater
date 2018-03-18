@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Movie 43",
+    "basePrice": "6",
+    "rating": "LOW",
+    "seances": [
+      {
+        "dateTime": [ 2018, 5, 14, 14, 20 ],
+        "auditorium": {
+          "name": "Small Hall"
+        }
+      },
+      {
+        "dateTime": [ 2018, 5, 14, 19, 30 ],
+        "auditorium": {
+          "name": "Small Hall"
+        }
+      },
+      {
+        "dateTime": [ 2018, 5, 15, 11, 30 ],
+        "auditorium": {
+          "name": "Medium Hall"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Stand Up",
+    "basePrice": "50",
+    "rating": "MID",
+    "seances": [
+      {
+        "dateTime": [ 2018, 5, 3, 20, 15 ],
+        "auditorium": {
+          "name": "Main Hall"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Tor: Ragnarek",
+    "basePrice": "12",
+    "rating": "HIGH",
+    "seances": [
+      {
+        "dateTime": [ 2018, 5, 14, 18, 0 ],
+        "auditorium": {
+          "name": "Main Hall"
+        }
+      },
+      {
+        "dateTime": [ 2018, 5, 15, 16, 20 ],
+        "auditorium": {
+          "name": "Main Hall"
+        }
+      },
+      {
+        "dateTime": [ 2018, 5, 17, 13, 50 ],
+        "auditorium": {
+          "name": "Medium Hall"
+        }
+      }
+    ]
+  }
+]

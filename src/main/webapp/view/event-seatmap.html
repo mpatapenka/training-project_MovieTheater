@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Event seatmap</title>
+</head>
+<body>
+    <h3>Event: <span th:text="${event.name}">Event Name...</span></h3>
+    <h4>Price: <span th:text="${event.basePrice}">Base Price...</span>, Rating: <span th:text="${event.rating}">Rating...</span></h4>
+    <h4>Seance: <span th:text="${event.seances[0].dateTime}">Seance date time...</span></h4>
+    <h3>Auditorium: <span th:text="${auditorium.name}">Auditorium name...</span></h3>
+    <div th:if="${auditorium != null}">
+        <span th:each="seat,iter : ${auditorium.allSeats}">
+            <input type="checkbox" name="seatNumber" th:value="${seat}" th:title="${seat}"/>
+            <span th:if="${(iter.index + 1) / 30 >= 1 && (iter.index + 1) % 30 == 0}"><br></span>
+        </span>
+        <br>
+        <button name="checkPrice" type="button">Check price</button>
+    </div>
+</body>
+</html>
