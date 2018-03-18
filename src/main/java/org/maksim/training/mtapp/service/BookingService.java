@@ -13,4 +13,5 @@ public interface BookingService {
     Collection<Ticket> reserveTickets(Event event, LocalDateTime dateTime, User user, Collection<Integer> seats);
     void bookTickets(Collection<Ticket> tickets);
     Collection<Ticket> getPurchasedTicketsForEvent(Event event, LocalDateTime dateTime);
+    Collection<Ticket> getPurchasedTicketsForUser(User user, LocalDateTime dateTime);
 }

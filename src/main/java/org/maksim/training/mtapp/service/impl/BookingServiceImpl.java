@@ -8,6 +8,7 @@ import org.maksim.training.mtapp.entity.User;
 import org.maksim.training.mtapp.entity.UserRole;
 import org.maksim.training.mtapp.repository.TicketRepository;
 import org.maksim.training.mtapp.repository.specification.ticket.TicketsByEventAndDateTimeSpecification;
+import org.maksim.training.mtapp.repository.specification.ticket.TicketsByUserAndDateTimeSpecification;
 import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.UserService;
@@ -110,5 +111,11 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(readOnly = true)
     public Collection<Ticket> getPurchasedTicketsForEvent(Event event, LocalDateTime dateTime) {
         return ticketRepository.query(new TicketsByEventAndDateTimeSpecification(event, dateTime));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Ticket> getPurchasedTicketsForUser(User user, LocalDateTime dateTime) {
+        return ticketRepository.query(new TicketsByUserAndDateTimeSpecification(user, dateTime));
     }
 }
