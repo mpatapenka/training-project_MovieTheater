@@ -1,5 +1,6 @@
 package org.maksim.training.mtapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,7 +39,7 @@ public class Ticket {
     private Long id;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "_user_id", nullable = false)
+    @JoinColumn(name = "_user_id")
     private User user;
 
     @ManyToOne(targetEntity = Event.class, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
@@ -45,6 +47,8 @@ public class Ticket {
     private Event event;
 
     @Column(name = "_seance_datetime", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTime;
 
     @Column(name = "_selling_price", nullable = false)

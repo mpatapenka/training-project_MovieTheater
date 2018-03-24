@@ -5,17 +5,34 @@
     <title>Event seatmap</title>
 </head>
 <body>
-    <h3>Event: <span th:text="${event.name}">Event Name...</span></h3>
+    <h3>Event: <span id="eventName" th:text="${event.name}">Event Name...</span></h3>
     <h4>Price: <span th:text="${event.basePrice}">Base Price...</span>, Rating: <span th:text="${event.rating}">Rating...</span></h4>
-    <h4>Seance: <span th:text="${event.seances[0].dateTime}">Seance date time...</span></h4>
+    <h4>Seance: <span id="seanceDateTime" th:text="${event.seances[0].dateTime}">Seance date time...</span></h4>
     <h3>Auditorium: <span th:text="${auditorium.name}">Auditorium name...</span></h3>
-    <div th:if="${auditorium != null}">
-        <span th:each="seat,iter : ${auditorium.allSeats}">
-            <input type="checkbox" name="seatNumber" th:value="${seat}" th:title="${seat}"/>
-            <span th:if="${(iter.index + 1) / 30 >= 1 && (iter.index + 1) % 30 == 0}"><br></span>
-        </span>
-        <br>
-        <button name="checkPrice" type="button">Check price</button>
+    <div th:if="${auditorium.allSeats != null}">
+        <button name="checkPrice" onclick="checkPrice()" type="button">Calculate Selling Price</button>
+        <span id="sellingPrice"></span>
+        <br><br>
+        <form th:action="@{/book}" method="post">
+            <input type="hidden" name="eventName" th:value="${event.name}"/>
+            <input type="hidden" name="dateTime" th:value="${event.seances[0].dateTime}"/>
+            <input type="hidden" id="seats" name="seats" value=""/>
+            <input type="submit" onmouseover="prepareSeats()" value="Book Tickets"/>
+        </form>
+        <br><br>
+        <table style="width:100%" border="0">
+            <tr th:each="rowIndex : ${#numbers.sequence(1, (#lists.size(auditorium.allSeats) / 20) + 1)}">
+                <td th:each="columnIndex : ${#numbers.sequence(1, 20)}" th:with="seatIndex=${(rowIndex - 1) * 20 + columnIndex - 1}" style="text-align: center; width: 5%">
+                    <div th:if="${seatIndex < #lists.size(auditorium.allSeats)}" th:with="seat=${auditorium.allSeats[seatIndex]}">
+                        <input type="checkbox" name="seatNumber" th:value="${seat}"/><br>
+                        <span th:if="${#lists.contains(auditorium.vipSeats, seat)}">VIP</span><span th:text="${'#' + seat}">...</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
+    <input type="hidden" id="checkPriceUrl" th:value="@{/book/selling-price}">
+    <script th:src="@{/resources/vendors/jquery/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/resources/js/client-utils.js}"></script>
 </body>
 </html>

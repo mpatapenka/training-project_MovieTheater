@@ -11,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tickets")
@@ -33,19 +36,47 @@ public class TicketsController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public String getPageWithTickets(Model model) {
+        model.addAttribute("eventNames", eventService.getAll().stream().map(Event::getName).collect(Collectors.toList()));
+        return "tickets";
+    }
+
     @GetMapping(params = {"eventName", "dateTime"}, consumes = MediaType.APPLICATION_PDF_VALUE)
-    public ModelAndView getBookedTicketsForEvent(@RequestParam String eventName,
+    public ModelAndView getBookedTicketsForEvent(HttpServletResponse response, @RequestParam String eventName,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
+        response.setHeader("Content-disposition", "attachment; filename=tickets-" + eventName + "-" + dateTime + ".pdf");
         Event event = eventService.getByName(eventName);
         Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(event, dateTime);
         return new ModelAndView(new TicketPdfView(), "tickets", purchasedTicketsForEvent);
     }
 
     @GetMapping(params = {"email", "dateTime"}, consumes = MediaType.APPLICATION_PDF_VALUE)
-    public ModelAndView getBookedTicketsForUser(@RequestParam String email,
+    public ModelAndView getBookedTicketsForUser(HttpServletResponse response, @RequestParam String email,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
+        response.setHeader("Content-disposition", "attachment; filename=tickets-" + email + "-" + dateTime + ".pdf");
         User user = userService.getByEmail(email);
         Collection<Ticket> purchasedTicketsForUser = bookingService.getPurchasedTicketsForUser(user, dateTime);
         return new ModelAndView(new TicketPdfView(), "tickets", purchasedTicketsForUser);
+    }
+
+    @GetMapping(params = {"eventName", "dateTime"})
+    public String getPageWithBookedTicketsForEvent(@RequestParam String eventName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
+            Model model) {
+        Event event = eventService.getByName(eventName);
+        Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(event, dateTime);
+        model.addAttribute("tickets", purchasedTicketsForEvent);
+        return "booked-tickets";
+    }
+
+    @GetMapping(params = {"email", "dateTime"})
+    public String getPageWithBookedTicketsForUser(@RequestParam String email,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
+            Model model) {
+        User user = userService.getByEmail(email);
+        Collection<Ticket> purchasedTicketsForUser = bookingService.getPurchasedTicketsForUser(user, dateTime);
+        model.addAttribute("tickets", purchasedTicketsForUser);
+        return "booked-tickets";
     }
 }

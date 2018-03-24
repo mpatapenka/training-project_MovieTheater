@@ -1,5 +1,6 @@
 package org.maksim.training.mtapp.controller;
 
+import com.google.common.collect.Lists;
 import org.maksim.training.mtapp.entity.User;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,17 @@ public class UsersController {
     @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> uploadUsers(@RequestBody List<User> users) {
         try {
-            users.forEach(userService::save);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            List<String> failedEmails = Lists.newArrayList();
+            for (User user : users) {
+                if (userService.save(user) == null) {
+                    failedEmails.add(user.getEmail());
+                }
+            }
+            return failedEmails.isEmpty()
+                    ? new ResponseEntity<>(users, HttpStatus.CREATED)
+                    : new ResponseEntity<>("Following emails already registered: " + failedEmails, HttpStatus.CONFLICT);
         } catch (Exception e) {
-            return new ResponseEntity<>("Creation failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Creation failed with error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

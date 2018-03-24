@@ -3,14 +3,14 @@
     "firstName": "Maksim",
     "lastName": "Patapenka",
     "email": "maksim.patapenka@gmail.com",
-    "birthday": [ 1994, 5, 13 ],
+    "birthday": "1994-05-13",
     "role": "ADMIN"
   },
   {
     "firstName": "Viktor",
     "lastName": "Coi",
     "email": "viktor.coi@mail.ru",
-    "birthday": [ 1960, 1, 1 ],
+    "birthday": "1960-01-01",
     "role": "USER"
   }
 ]

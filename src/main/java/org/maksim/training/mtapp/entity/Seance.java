@@ -1,5 +1,6 @@
 package org.maksim.training.mtapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.maksim.training.mtapp.entity.converter.AuditoriumToNameConverter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -34,6 +36,8 @@ public class Seance implements Comparable<Seance> {
     private Long id;
 
     @Column(name = "_datetime", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTime;
 
     @Column(name = "_auditorium_name")

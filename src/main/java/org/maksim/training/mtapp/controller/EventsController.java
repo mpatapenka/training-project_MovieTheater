@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -54,6 +55,11 @@ public class EventsController {
         return "event-details";
     }
 
+    @GetMapping(params = {"eventName"})
+    public @ResponseBody Event getEventDetails(@RequestParam String eventName) {
+        return eventService.getByName(eventName);
+    }
+
     @GetMapping("/{eventId}/{dateTime}/seatmap")
     public String getEventSeatMap(@PathVariable Long eventId,
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime, Model model) {
@@ -69,9 +75,9 @@ public class EventsController {
     public ResponseEntity<?> uploadEvents(@RequestBody List<Event> events) {
         try {
             events.forEach(eventService::save);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(events, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Creation failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Creation failed with error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

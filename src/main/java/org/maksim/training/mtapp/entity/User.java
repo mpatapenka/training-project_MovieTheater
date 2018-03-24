@@ -1,5 +1,6 @@
 package org.maksim.training.mtapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -49,6 +51,8 @@ public class User {
     private String email;
 
     @Column(name = "_birthday")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @Enumerated(EnumType.ORDINAL)

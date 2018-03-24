@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Booked tickets</title>
+</head>
+<body>
+<h3>Booked tickets:</h3>
+<table style="width: 100%; text-align: center" th:if="${tickets != null}">
+    <tr>
+        <th>Event name</th>
+        <th>Date time</th>
+        <th>Auditorium</th>
+        <th>Seat</th>
+        <th>Selling price</th>
+        <th>User</th>
+    </tr>
+    <tr th:each="ticket : ${tickets}">
+        <td th:text="${ticket.event.name}"></td>
+        <td th:text="${ticket.dateTime}"></td>
+        <td th:text="${ticket.event.getAuditorium(ticket.dateTime).name}"></td>
+        <td th:text="${ticket.seat}"></td>
+        <td th:text="${ticket.sellingPrice}"></td>
+        <td>
+            <span th:if="${ticket.user != null}" th:text="${ticket.user.firstName + ticket.user.lastName}">...</span>
+            <span th:if="${ticket.user == null}"> - </span>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
