@@ -99,7 +99,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public void bookTickets(Collection<Ticket> tickets) {
         tickets.stream()
-                .filter(ticket -> ticket.getUser() != null && !UserRole.ANONYMOUS.equals(ticket.getUser().getRole()))
+                .filter(t -> t.getUser() != null && t.getUser().getRoles() != null && !t.getUser().getRoles().contains(UserRole.ANONYMOUS))
                 .forEach(ticket -> {
                     ticket.getUser().getTickets().add(ticket);
                     userService.save(ticket.getUser());

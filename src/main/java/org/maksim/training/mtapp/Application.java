@@ -1,6 +1,7 @@
 package org.maksim.training.mtapp;
 
 import org.maksim.training.mtapp.config.PersistenceConfig;
+import org.maksim.training.mtapp.config.SecurityConfig;
 import org.maksim.training.mtapp.config.WebConfig;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,8 @@ import java.util.Random;
 })
 @Import({
         PersistenceConfig.class,
-        WebConfig.class
+        WebConfig.class,
+        SecurityConfig.class
 })
 public class Application {
     public static void main(String[] args) {

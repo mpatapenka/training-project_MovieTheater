@@ -68,7 +68,7 @@ public class BookingFlowTest {
     }
 
     private User meUnregistered = User.builder().firstName("Maksim").lastName("Patapenka")
-            .email("maksim.patapenka@gmail.com").role(UserRole.USER)
+            .email("maksim.patapenka@gmail.com").role(UserRole.REGISTERED_USER)
             .birthday(LocalDate.of(1994, Month.MAY, 13)).build();
 
     @Test

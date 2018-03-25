@@ -8,10 +8,13 @@ import org.maksim.training.mtapp.repository.specification.user.UserByEmailSpecif
 import org.maksim.training.mtapp.repository.specification.user.UserByIdSpecification;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -73,5 +76,15 @@ public class UserServiceImpl extends CrudGenericService<User, Long> implements U
     @Transactional(readOnly = true)
     public Collection<User> getAll() {
         return getRepository().query(new AllUsersSpecification());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        List<User> foundUsers = getRepository().query(new UserByEmailSpecification(username));
+        if (!foundUsers.isEmpty()) {
+            return foundUsers.get(0);
+        }
+        throw new UsernameNotFoundException("Username '" + username + "' not found.");
     }
 }

@@ -25,7 +25,7 @@ public class ImUserRepositoryTest {
     private UserRepository userRepository;
 
     private User user = User.builder().firstName("Maksim").lastName("Patapenka").email("maksim.patapenka@gmail.com")
-            .birthday(LocalDate.of(1994, Month.MAY, 13)).role(UserRole.USER).build();
+            .birthday(LocalDate.of(1994, Month.MAY, 13)).role(UserRole.REGISTERED_USER).build();
 
     @Test
     public void checkThatUserIsSavedInMemoryStorage() {
@@ -48,7 +48,7 @@ public class ImUserRepositoryTest {
         assertThat(userFromRepository, equalTo(user));
 
         User userUpdate = User.builder().id(userFromRepository.getId()).firstName("Test").lastName("Test")
-                .email("test@test.test").role(UserRole.ADMIN).build();
+                .email("test@test.test").role(UserRole.BOOKING_MANAGER).build();
         userRepository.update(userUpdate);
 
         assertThat(userRepository.query(new AllUsersSpecification()), hasSize(1));

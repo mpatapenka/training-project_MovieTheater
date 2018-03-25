@@ -3,14 +3,21 @@
     "firstName": "Maksim",
     "lastName": "Patapenka",
     "email": "maksim.patapenka@gmail.com",
+    "password": "$2a$10$e0YnPsT0aDCygSh.aiVoxOEru75vG2s0B1UyKvHWwbgtL.URDIuCC",
     "birthday": "1994-05-13",
-    "role": "ADMIN"
+    "roles": [
+      "REGISTERED_USER",
+      "BOOKING_MANAGER"
+    ]
   },
   {
     "firstName": "Viktor",
     "lastName": "Coi",
     "email": "viktor.coi@mail.ru",
+    "password": "$2a$10$e0YnPsT0aDCygSh.aiVoxOEru75vG2s0B1UyKvHWwbgtL.URDIuCC",
     "birthday": "1960-01-01",
-    "role": "USER"
+    "roles": [
+      "REGISTERED_USER"
+    ]
   }
 ]

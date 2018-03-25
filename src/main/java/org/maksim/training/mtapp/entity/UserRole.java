@@ -1,5 +1,19 @@
 package org.maksim.training.mtapp.entity;
 
-public enum UserRole {
-    ADMIN, USER, ANONYMOUS
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
+    REGISTERED_USER, BOOKING_MANAGER, ANONYMOUS;
+
+    private final String authorityName = name().toUpperCase();
+    private final String authority = "ROLE_" + authorityName;
+
+    public String getAuthorityName() {
+        return authorityName;
+    }
+
+    @Override
+    public String getAuthority() {
+        return authority;
+    }
 }

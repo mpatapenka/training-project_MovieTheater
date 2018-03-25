@@ -46,7 +46,7 @@ public class Event {
     @Column(name = "_base_price", nullable = false)
     private BigDecimal basePrice;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "_rating", nullable = false)
     private EventRating rating;
 

@@ -5,6 +5,15 @@
     <title>Index</title>
 </head>
 <body>
+    <div th:if="${username != null}">
+        <form th:action="@{/j_spring_security_logout}" method="post" id="logoutForm"></form>
+        <script>
+            function logoutSubmit() {
+                document.getElementById("logoutForm").submit();
+            }
+        </script>
+        <h3>Hi <span th:text="${username}">Username</span> (<a href="javascript:logoutSubmit()">logout</a>),</h3>
+    </div>
     <h3>Would you like to buy tickets?</h3>
     <h4>Please choose <a th:href="@{/events}">events</a> to reserve ticket.</h4>
     <br>

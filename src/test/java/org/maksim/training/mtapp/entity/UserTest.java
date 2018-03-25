@@ -16,7 +16,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getBirthday());
-        assertNull(user.getRole());
+        assertNotNull(user.getRoles());
         assertNotNull(user.getTickets());
         assertTrue(user.getTickets().isEmpty());
     }

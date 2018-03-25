@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div th:if="${isError}">
+    User with this email is not found!
+</div>
+<div th:if="${isLogout}">
+    You have been successfully logged out, do you wanna re-login once again?
+</div>
+<form action="#" th:action="@{/j_spring_security_check}" method="post">
+    Username/Email: <input type="email" name="email" title="Username/Email"/><br>
+    Password: <input type="password" name="password" title="Password"/><br>
+    Remember Me: <input type="checkbox" value="true" name="remember-me" title="Remember-Me"/><br>
+    <input type="submit" value="Login"/>
+</form>
+</body>
+</html>
