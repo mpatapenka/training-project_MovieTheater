@@ -2,7 +2,6 @@ package org.maksim.training.mtapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +53,7 @@ public class User implements UserDetails {
     @Column(name = "_last_name", length = 50)
     private String lastName;
 
-`    @Column(name = "_email", length = 50, nullable = false, unique = true)
+    @Column(name = "_email", length = 50, nullable = false, unique = true)
     private String email;
 
     @Column(name = "_password", length = 75, nullable = false)
