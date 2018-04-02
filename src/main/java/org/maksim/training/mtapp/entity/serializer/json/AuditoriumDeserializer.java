@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuditoriumDeserializer extends JsonDeserializer<Auditorium> {
+public final class AuditoriumDeserializer extends JsonDeserializer<Auditorium> {
     private final AuditoriumService auditoriumService;
 
     @Autowired

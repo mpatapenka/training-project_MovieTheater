@@ -8,7 +8,10 @@
     "roles": [
       "REGISTERED_USER",
       "BOOKING_MANAGER"
-    ]
+    ],
+    "userAccount": {
+      "amount": 150
+    }
   },
   {
     "firstName": "Viktor",
@@ -18,6 +21,9 @@
     "birthday": "1960-01-01",
     "roles": [
       "REGISTERED_USER"
-    ]
+    ],
+    "userAccount": {
+      "amount": 40
+    }
   }
 ]

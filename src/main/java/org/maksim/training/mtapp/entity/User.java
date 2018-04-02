@@ -54,7 +54,7 @@ public class User implements UserDetails {
     @Column(name = "_last_name", length = 50)
     private String lastName;
 
-    @Column(name = "_email", length = 50, nullable = false)
+`    @Column(name = "_email", length = 50, nullable = false, unique = true)
     private String email;
 
     @Column(name = "_password", length = 75, nullable = false)
@@ -65,14 +65,13 @@ public class User implements UserDetails {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
-    @Column(name = "_account")
-    @OneToOne(targetEntity = UserAccount.class, fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToOne(targetEntity = UserAccount.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserAccount userAccount;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = UserRole.class)
     @Column(name = "_roles", nullable = false)
-    @Singular private Collection<UserRole> roles = Sets.newHashSet();
+    @Singular private Collection<UserRole> roles;
 
     @OneToMany(mappedBy = "user")
     @Builder.Default private Collection<Ticket> tickets = Lists.newArrayList();

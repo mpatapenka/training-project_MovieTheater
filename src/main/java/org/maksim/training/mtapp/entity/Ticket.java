@@ -38,11 +38,11 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "_user_id")
     private User user;
 
-    @ManyToOne(targetEntity = Event.class, fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(targetEntity = Event.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "_event_id", nullable = false)
     private Event event;
 
