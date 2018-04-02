@@ -1,25 +1,30 @@
 package org.maksim.training.mtapp.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.maksim.training.mtapp.entity.Ticket;
 import org.maksim.training.mtapp.entity.User;
 import org.maksim.training.mtapp.entity.UserAccount;
 import org.maksim.training.mtapp.service.PaymentService;
+import org.maksim.training.mtapp.service.PricingService;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Optional;
 
 @Slf4j
 @Service
 public class PaymentServiceImpl implements PaymentService {
     private final UserService userService;
+    private final PricingService pricingService;
 
     @Autowired
-    public PaymentServiceImpl(UserService userService) {
+    public PaymentServiceImpl(UserService userService, PricingService pricingService) {
         this.userService = userService;
+        this.pricingService = pricingService;
     }
 
     @Override
@@ -37,24 +42,34 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public void withdraw(User user, BigDecimal amount) {
-        User actualUser = findActualUser(user);
-        UserAccount account = Optional.ofNullable(actualUser.getUserAccount())
+    public void pay(Collection<Ticket> tickets, User tempUser) {
+        User user = findActualUser(tempUser);
+        if (user == null) {
+            log.warn("Tickets: {}, could not be paid by user account. User is not specified.", tickets);
+        } else {
+            tickets.forEach(t -> {
+                t.setUser(user);
+                t.setAmountPaid(t.getSellingPrice());
+            });
+            user.getTickets().addAll(tickets);
+            withdraw(user, pricingService.calculateTicketsPrice(tickets));
+        }
+    }
+
+    private void withdraw(User user, BigDecimal amount) {
+        UserAccount account = Optional.ofNullable(user.getUserAccount())
                 .filter(acc -> acc.getAmount().compareTo(amount) >= 0).orElseThrow(() -> {
-                    log.error("Actual user: {} doesn't have valid account for withdraw operation." +
-                            " Account doesn't exists or credit is not enough to cover withdraw amount: {}.", user, amount);
-                    return new RuntimeException();
+                    user.setPassword("");
+                    return new RuntimeException("Actual user: " + user + " doesn't have valid account for withdraw operation." +
+                            " Account doesn't exists or credit is not enough to cover withdraw amount: " + amount + ".");
                 });
         account.setAmount(account.getAmount().subtract(amount));
-        userService.save(actualUser);
+        userService.save(user);
     }
 
     private User findActualUser(User user) {
         return Optional.ofNullable(user).map(User::getId).map(userService::getById)
                 .orElseGet(() -> Optional.ofNullable(user).map(User::getEmail).map(userService::getByEmail)
-                        .orElseThrow(() -> {
-                            log.error("Actual user not found by id and email from: {}.", user);
-                            return new RuntimeException();
-                        }));
+                        .orElse(null));
     }
 }

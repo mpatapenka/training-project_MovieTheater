@@ -35,8 +35,8 @@ abstract class OrmRepository<T> implements Repository<T> {
     }
 
     @Override
-    public void update(T item) {
-        em.merge(item);
+    public T update(T item) {
+        return em.merge(item);
     }
 
     @Override

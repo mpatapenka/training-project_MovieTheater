@@ -9,6 +9,6 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public String handleAnyException(Exception e, Model model) {
         model.addAttribute("message", e.getMessage());
-        return "error";
+        return "custom-error";
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
@@ -18,7 +18,9 @@
     <h3>Would you like to buy tickets?</h3>
     <h4>Please choose <a th:href="@{/events}">events</a> to reserve ticket.</h4>
     <br>
-    <h3>Have you bought some tickets already?</h3>
-    <h4>Please check <a th:href="@{/tickets}">tickets page</a>.</h4>
+    <div sec:authorize="hasRole('BOOKING_MANAGER')">
+        <h3>Have you bought some tickets already?</h3>
+        <h4>Please check <a th:href="@{/tickets}">tickets page</a>.</h4>
+    </div>
 </body>
 </html>

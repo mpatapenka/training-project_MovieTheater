@@ -17,10 +17,9 @@ import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.CounterService;
 import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.EventService;
+import org.maksim.training.mtapp.service.PricingService;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -42,6 +41,8 @@ public class BookingFlowTest {
     @Autowired
     private UserService userService;
     @Autowired
+    private PricingService pricingService;
+    @Autowired
     private BookingService bookingService;
     @Autowired
     private EventService eventService;
@@ -49,6 +50,10 @@ public class BookingFlowTest {
     private AuditoriumService auditoriumService;
     @Autowired
     private CounterService counterService;
+
+    private User meUnregistered = User.builder().firstName("Maksim").lastName("Patapenka")
+            .email("maksim.patapenka@gmail.com").role(UserRole.REGISTERED_USER)
+            .birthday(LocalDate.of(1994, Month.MAY, 13)).build();
 
     @Before
     public void before() {
@@ -66,10 +71,6 @@ public class BookingFlowTest {
         }
         log.info("All events: {}", eventService.getAll());
     }
-
-    private User meUnregistered = User.builder().firstName("Maksim").lastName("Patapenka")
-            .email("maksim.patapenka@gmail.com").role(UserRole.REGISTERED_USER)
-            .birthday(LocalDate.of(1994, Month.MAY, 13)).build();
 
     @Test
     public void wholeBookingFlowWithRegistration() {
@@ -95,13 +96,13 @@ public class BookingFlowTest {
         List<Integer> seatsToBuy = allSeats.stream().limit(10).collect(Collectors.toList());
         log.info("Seats to buy: {}", seatsToBuy);
 
-        BigDecimal overallPrice = bookingService.getTicketsPrice(eventToGo, seanceDateTime, meRegistered, seatsToBuy);
+        BigDecimal overallPrice = pricingService.calculateTicketsPrice(eventToGo, seanceDateTime, meRegistered, seatsToBuy);
         log.info("Required to pay: {}", overallPrice);
 
-        Collection<Ticket> tickets = bookingService.reserveTickets(eventToGo, seanceDateTime, meRegistered, seatsToBuy);
+        Collection<Ticket> tickets = bookingService.prepareTickets(eventToGo, seanceDateTime, meRegistered, seatsToBuy);
         log.info("Reserved tickets: {}", tickets);
 
-        bookingService.bookTickets(tickets);
+        bookingService.book(tickets, meRegistered);
 
         Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(eventToGo, seanceDateTime);
         log.info("All purchased tickets for event: {}", purchasedTicketsForEvent);

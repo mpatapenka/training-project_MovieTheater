@@ -49,12 +49,12 @@ public class LuckyWinnerAspectTest {
                 Ticket.builder().user(user).event(event).dateTime(dateTime).seat(13).sellingPrice(BigDecimal.TEN).build()
         );
 
-        bookingService.bookTickets(ticketsToBook);
-        Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(event, dateTime);
+        bookingService.book(ticketsToBook, user);
+        Ticket ticketToCheck = bookingService.getPurchasedTicketsForEvent(event, dateTime).stream()
+                .filter(t -> t.getSeat() == 13).findFirst().orElse(null);
 
-        assertNotNull(purchasedTicketsForEvent);
-        assertFalse(purchasedTicketsForEvent.isEmpty());
-        assertEquals(BigDecimal.TEN, purchasedTicketsForEvent.iterator().next().getSellingPrice());
+        assertNotNull(ticketToCheck);
+        assertEquals(BigDecimal.TEN, ticketToCheck.getSellingPrice());
     }
 
     @Test
@@ -65,11 +65,11 @@ public class LuckyWinnerAspectTest {
                 Ticket.builder().user(user).event(event).dateTime(dateTime).seat(13).sellingPrice(BigDecimal.TEN).build()
         );
 
-        bookingService.bookTickets(ticketsToBook);
-        Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(event, dateTime);
+        bookingService.book(ticketsToBook, user);
+        Ticket ticketToCheck = bookingService.getPurchasedTicketsForEvent(event, dateTime).stream()
+                .filter(t -> t.getSeat() == 13).findFirst().orElse(null);
 
-        assertNotNull(purchasedTicketsForEvent);
-        assertFalse(purchasedTicketsForEvent.isEmpty());
-        assertEquals(BigDecimal.ZERO, purchasedTicketsForEvent.iterator().next().getSellingPrice());
+        assertNotNull(ticketToCheck);
+        assertEquals(BigDecimal.ZERO, ticketToCheck.getSellingPrice());
     }
 }

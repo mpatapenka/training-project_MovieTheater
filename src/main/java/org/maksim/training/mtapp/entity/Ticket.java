@@ -54,6 +54,9 @@ public class Ticket {
     @Column(name = "_selling_price", nullable = false)
     private BigDecimal sellingPrice;
 
+    @Column(name = "_amount_paid")
+    private BigDecimal amountPaid;
+
     @Column(name = "_seat", nullable = false)
     private int seat;
 }

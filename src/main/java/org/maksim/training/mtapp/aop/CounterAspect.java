@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
-@Aspect
-@Component
 @Slf4j
+@Component
+@Aspect
 public final class CounterAspect {
     private final CounterService counterService;
 
@@ -21,13 +21,13 @@ public final class CounterAspect {
         this.counterService = counterService;
     }
 
-    @Before("execution(* org.maksim.training.mtapp.*.EventService.getByName(..)) && args(name)")
+    @Before("execution(* org.maksim.training.mtapp..*.EventService.getByName(..)) && args(name)")
     public void countEventByNameAccesses(String name) {
         log.debug("Count event by name: {}", name);
         counterService.countEventByName(name);
     }
 
-    @Before("execution(* org.maksim.training.mtapp.*.BookingService.bookTickets(..)) && args(tickets)")
+    @Before("execution(* org.maksim.training.mtapp..*.BookingService.book(..)) && args(tickets, ..)")
     public void countHowManyTicketsWereBookedForEvent(Collection<Ticket> tickets) {
         if (tickets != null) {
             log.debug("Count booked tickets for event");

@@ -5,8 +5,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -23,14 +23,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Slf4j
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("org.maksim.training.mtapp.repository.orm")
 @PropertySource({
         "classpath:database.properties",
         "classpath:persistence.properties"
 })
-@Slf4j
+@ImportResource({"classpath:spring/persistence-repositories.xml"})
 public class PersistenceConfig {
     private static final int DEFAULT_INITIAL_POOL_SIZE = 3;
     private static final int DEFAULT_MAX_POOL_SIZE = 10;

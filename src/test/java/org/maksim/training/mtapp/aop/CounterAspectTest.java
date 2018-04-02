@@ -17,7 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = AopTestConfig.class)
@@ -69,7 +71,7 @@ public class CounterAspectTest {
                 Ticket.builder().event(event3).dateTime(LocalDateTime.now()).seat(6).build()
         );
 
-        bookingService.bookTickets(ticketsToBook);
+        bookingService.book(ticketsToBook, null);
 
         verify(mockCounterService, times(2)).countBookTimesForEvent("event1");
         verify(mockCounterService, times(1)).countBookTimesForEvent("event2");

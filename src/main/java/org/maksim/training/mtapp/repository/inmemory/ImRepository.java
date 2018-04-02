@@ -36,10 +36,10 @@ abstract class ImRepository<T> implements Repository<T> {
     }
 
     @Override
-    public void update(T item) {
+    public T update(T item) {
         Long id = getId(item);
         if (id != null) {
-            storage.replace(id, item);
+            return storage.replace(id, item);
         } else {
             log.error("Item {} is not allowed to update.", item);
             throw new IllegalArgumentException("ID should be specified to update into in-memory repository.");
