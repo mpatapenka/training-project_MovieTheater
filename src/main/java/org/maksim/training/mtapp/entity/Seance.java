@@ -1,6 +1,7 @@
 package org.maksim.training.mtapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.migesok.jaxb.adapter.javatime.LocalDateTimeXmlAdapter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +20,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
 @Builder
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
+@XmlRootElement
 @Entity
 @Table(name = "_seance")
 public class Seance implements Comparable<Seance> {
@@ -35,6 +39,7 @@ public class Seance implements Comparable<Seance> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @XmlJavaTypeAdapter(LocalDateTimeXmlAdapter.class)
     @Column(name = "_datetime", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

@@ -49,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers("/error**").permitAll()
                         .antMatchers("/users/upload**").permitAll()
                         .antMatchers("/events/upload**").permitAll()
+                        .antMatchers("/rest/**").permitAll()
+                        .antMatchers("/rest**").permitAll()
                         .antMatchers("/tickets/**").hasRole(UserRole.BOOKING_MANAGER.getAuthorityName())
                         .anyRequest().hasRole(UserRole.REGISTERED_USER.getAuthorityName())
                 .and()

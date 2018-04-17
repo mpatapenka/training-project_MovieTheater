@@ -9,7 +9,9 @@ import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +60,22 @@ public class TicketsController {
         User user = userService.getByEmail(email);
         Collection<Ticket> purchasedTicketsForUser = bookingService.getPurchasedTicketsForUser(user, dateTime);
         return new ModelAndView(new TicketPdfView(), "tickets", purchasedTicketsForUser);
+    }
+
+    @GetMapping(params = {"eventName", "dateTime"}, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> getBookedTicketsForEventRest(@RequestParam String eventName,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
+        Event event = eventService.getByName(eventName);
+        Collection<Ticket> purchasedTicketsForEvent = bookingService.getPurchasedTicketsForEvent(event, dateTime);
+        return new ResponseEntity<>(purchasedTicketsForEvent, HttpStatus.OK);
+    }
+
+    @GetMapping(params = {"email", "dateTime"}, produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> getBookedTicketsForUserRest(@RequestParam String email,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime) {
+        User user = userService.getByEmail(email);
+        Collection<Ticket> purchasedTicketsForUser = bookingService.getPurchasedTicketsForUser(user, dateTime);
+        return new ResponseEntity<>(purchasedTicketsForUser, HttpStatus.OK);
     }
 
     @GetMapping(params = {"eventName", "dateTime"})

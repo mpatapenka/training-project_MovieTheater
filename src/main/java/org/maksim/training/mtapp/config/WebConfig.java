@@ -1,23 +1,26 @@
 package org.maksim.training.mtapp.config;
 
-import org.maksim.training.mtapp.controller.view.pdf.TicketPdfView;
+import org.maksim.training.mtapp.rest.message.converter.TicketToPdfHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import java.util.List;
+
 @Configuration
 @EnableWebMvc
-@ComponentScan("org.maksim.training.mtapp.controller")
+@ComponentScan({"org.maksim.training.mtapp.controller", "org.maksim.training.mtapp.rest"})
 public class WebConfig implements WebMvcConfigurer {
     @Bean
     public SpringResourceTemplateResolver thymeleafTemplateResolver() {
@@ -55,5 +58,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MappingJackson2HttpMessageConverter());
+        converters.add(new TicketToPdfHttpMessageConverter());
     }
 }
