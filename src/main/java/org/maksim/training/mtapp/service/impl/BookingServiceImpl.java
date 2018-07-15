@@ -1,9 +1,9 @@
 package org.maksim.training.mtapp.service.impl;
 
 import com.google.common.collect.Lists;
-import org.maksim.training.mtapp.entity.Event;
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.Event;
+import org.maksim.training.mtapp.model.Ticket;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.repository.TicketRepository;
 import org.maksim.training.mtapp.repository.specification.ticket.TicketsByEventAndDateTimeSpecification;
 import org.maksim.training.mtapp.repository.specification.ticket.TicketsByUserAndDateTimeSpecification;

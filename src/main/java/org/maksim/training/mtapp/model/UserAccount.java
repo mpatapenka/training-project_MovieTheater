@@ -1,4 +1,4 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.concurrent.atomic.AtomicLong;
+import java.math.BigDecimal;
 
 @Builder
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -25,18 +25,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "_counter")
-public class Counter {
+@Table(name = "_user_account")
+public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "_domain", length = 50, nullable = false)
-    private String domain;
-
-    @Column(name = "_identifier", length = 100, nullable = false)
-    private String identifier;
-
-    @Column(name = "_count", nullable = false)
-    private AtomicLong count;
+    @Column(name = "_amount", nullable = false)
+    @Builder.Default private BigDecimal amount = BigDecimal.ZERO;
 }

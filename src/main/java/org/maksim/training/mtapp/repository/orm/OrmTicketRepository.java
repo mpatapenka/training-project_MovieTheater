@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.repository.orm;
 
-import org.maksim.training.mtapp.entity.Ticket;
+import org.maksim.training.mtapp.model.Ticket;
 import org.maksim.training.mtapp.repository.TicketRepository;
 import org.springframework.stereotype.Repository;
 

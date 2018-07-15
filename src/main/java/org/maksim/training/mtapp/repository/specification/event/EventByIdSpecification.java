@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.repository.specification.event;
 
 import lombok.RequiredArgsConstructor;
-import org.maksim.training.mtapp.entity.Event;
+import org.maksim.training.mtapp.model.Event;
 import org.maksim.training.mtapp.repository.specification.CriteriaSpecification;
 import org.maksim.training.mtapp.repository.specification.PredicateSpecification;
 

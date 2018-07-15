@@ -17,7 +17,7 @@ import java.util.Random;
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @ComponentScan({
-        "org.maksim.training.mtapp.entity",
+        "org.maksim.training.mtapp.model",
         "org.maksim.training.mtapp.service",
         "org.maksim.training.mtapp.aop"
 })

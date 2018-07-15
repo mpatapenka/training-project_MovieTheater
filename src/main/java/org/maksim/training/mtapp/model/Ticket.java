@@ -1,4 +1,4 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;

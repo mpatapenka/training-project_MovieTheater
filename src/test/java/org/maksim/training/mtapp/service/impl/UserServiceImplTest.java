@@ -3,7 +3,7 @@ package org.maksim.training.mtapp.service.impl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.maksim.training.mtapp.config.UserServiceImplTestConfig;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

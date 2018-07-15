@@ -1,9 +1,9 @@
 package org.maksim.training.mtapp.service.impl;
 
-import org.maksim.training.mtapp.entity.Event;
-import org.maksim.training.mtapp.entity.EventRating;
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.Event;
+import org.maksim.training.mtapp.model.EventRating;
+import org.maksim.training.mtapp.model.Ticket;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.PricingService;
 import org.springframework.beans.factory.annotation.Autowired;

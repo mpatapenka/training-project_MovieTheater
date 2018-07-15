@@ -1,8 +1,7 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.migesok.jaxb.adapter.javatime.LocalDateTimeXmlAdapter;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.maksim.training.mtapp.entity.converter.AuditoriumToNameConverter;
+import org.maksim.training.mtapp.model.converter.AuditoriumToNameConverter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;

@@ -1,1 +1,3 @@
-rootProject.name = 'MovieTheater'
+rootProject.name = 'movie-theater'
+include 'mt-schema'
+include 'mt-app'

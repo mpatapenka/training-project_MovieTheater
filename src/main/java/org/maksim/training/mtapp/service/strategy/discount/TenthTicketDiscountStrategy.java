@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.service.strategy.discount;
 
-import org.maksim.training.mtapp.entity.Event;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.Event;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.service.DiscountService;
 import org.maksim.training.mtapp.service.annotation.DiscountStrategyQualifier;
 import org.maksim.training.mtapp.service.strategy.DiscountStrategy;

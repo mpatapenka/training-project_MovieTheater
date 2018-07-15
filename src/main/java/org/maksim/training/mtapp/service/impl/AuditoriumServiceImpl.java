@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.maksim.training.mtapp.entity.Auditorium;
+import org.maksim.training.mtapp.model.Auditorium;
 import org.maksim.training.mtapp.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.config;
 
-import org.maksim.training.mtapp.entity.UserRole;
+import org.maksim.training.mtapp.model.UserRole;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

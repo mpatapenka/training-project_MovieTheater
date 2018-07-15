@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.service.impl;
 
-import org.maksim.training.mtapp.entity.Counter;
+import org.maksim.training.mtapp.model.Counter;
 import org.maksim.training.mtapp.repository.CounterRepository;
 import org.maksim.training.mtapp.repository.specification.counter.CounterByDomainAndIdentifierSpecification;
 import org.maksim.training.mtapp.service.CounterService;

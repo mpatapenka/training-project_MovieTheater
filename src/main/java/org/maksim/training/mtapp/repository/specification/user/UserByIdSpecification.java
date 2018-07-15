@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.repository.specification.user;
 
 import lombok.RequiredArgsConstructor;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.repository.specification.CriteriaSpecification;
 import org.maksim.training.mtapp.repository.specification.PredicateSpecification;
 

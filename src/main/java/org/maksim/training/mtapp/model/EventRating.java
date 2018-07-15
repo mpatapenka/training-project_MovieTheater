@@ -1,4 +1,4 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 public enum EventRating {
     LOW, MID, HIGH

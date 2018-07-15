@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.controller;
 
-import org.maksim.training.mtapp.entity.Auditorium;
-import org.maksim.training.mtapp.entity.Event;
+import org.maksim.training.mtapp.model.Auditorium;
+import org.maksim.training.mtapp.model.Event;
 import org.maksim.training.mtapp.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -1,9 +1,9 @@
 package org.maksim.training.mtapp.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
-import org.maksim.training.mtapp.entity.UserAccount;
+import org.maksim.training.mtapp.model.Ticket;
+import org.maksim.training.mtapp.model.User;
+import org.maksim.training.mtapp.model.UserAccount;
 import org.maksim.training.mtapp.service.PaymentService;
 import org.maksim.training.mtapp.service.PricingService;
 import org.maksim.training.mtapp.service.UserService;

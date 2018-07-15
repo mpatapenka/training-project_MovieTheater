@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.rest.message.converter;
 
-import org.maksim.training.mtapp.entity.Ticket;
+import org.maksim.training.mtapp.model.Ticket;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;

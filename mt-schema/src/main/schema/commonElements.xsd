@@ -1,0 +1,60 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://model.mtapp.training.maksim.org"
+           targetNamespace="http://model.mtapp.training.maksim.org" elementFormDefault="qualified">
+
+    <xs:element name="event">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:identifiedType">
+                    <xs:sequence>
+                        <xs:element ref="tns:seance" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="basePrice" type="xs:decimal" use="required"/>
+                    <xs:attribute name="rating" type="tns:eventRating" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="seance">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:identifiedType">
+                    <xs:sequence>
+                        <xs:element ref="tns:auditorium"/>
+                    </xs:sequence>
+                    <xs:attribute name="dateTime" type="xs:dateTime" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="auditorium">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tns:identifiedType">
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="numberOfSeats" type="xs:int" use="required"/>
+                    <xs:attribute name="vipSeats" use="required">
+                        <xs:simpleType>
+                            <xs:list itemType="xs:int"/>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="eventRating">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LOW"/>
+            <xs:enumeration value="MID"/>
+            <xs:enumeration value="HIGH"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="identifiedType">
+        <xs:attribute name="id" type="xs:long"/>
+    </xs:complexType>
+</xs:schema>

@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.repository.UserRepository;
 import org.maksim.training.mtapp.repository.specification.user.AllUsersSpecification;
 import org.maksim.training.mtapp.repository.specification.user.UserByEmailSpecification;

@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.repository.inmemory;
 
-import org.maksim.training.mtapp.entity.Counter;
+import org.maksim.training.mtapp.model.Counter;
 import org.maksim.training.mtapp.repository.CounterRepository;
 import org.springframework.stereotype.Repository;
 

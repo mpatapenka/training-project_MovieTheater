@@ -1,9 +1,9 @@
 package org.maksim.training.mtapp.controller;
 
 import org.maksim.training.mtapp.controller.view.pdf.TicketPdfView;
-import org.maksim.training.mtapp.entity.Event;
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.Event;
+import org.maksim.training.mtapp.model.Ticket;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.service.BookingService;
 import org.maksim.training.mtapp.service.EventService;
 import org.maksim.training.mtapp.service.UserService;

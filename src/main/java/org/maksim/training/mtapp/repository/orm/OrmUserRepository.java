@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.repository.orm;
 
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 

@@ -3,7 +3,7 @@ package org.maksim.training.mtapp.aop;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.maksim.training.mtapp.entity.Ticket;
+import org.maksim.training.mtapp.model.Ticket;
 import org.maksim.training.mtapp.service.CounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

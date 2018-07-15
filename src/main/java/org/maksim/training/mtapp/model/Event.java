@@ -1,4 +1,4 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.service.impl;
 
-import org.maksim.training.mtapp.entity.Event;
+import org.maksim.training.mtapp.model.Event;
 import org.maksim.training.mtapp.repository.EventRepository;
 import org.maksim.training.mtapp.repository.specification.event.AllEventsSpecification;
 import org.maksim.training.mtapp.repository.specification.event.EventByIdSpecification;

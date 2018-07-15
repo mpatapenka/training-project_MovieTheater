@@ -2,7 +2,7 @@ package org.maksim.training.mtapp.repository.specification.counter;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.maksim.training.mtapp.entity.Counter;
+import org.maksim.training.mtapp.model.Counter;
 import org.maksim.training.mtapp.repository.specification.CriteriaSpecification;
 import org.maksim.training.mtapp.repository.specification.PredicateSpecification;
 

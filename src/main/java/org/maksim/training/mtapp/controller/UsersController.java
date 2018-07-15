@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.controller;
 
 import com.google.common.collect.Lists;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.User;
 import org.maksim.training.mtapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

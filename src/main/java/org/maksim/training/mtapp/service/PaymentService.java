@@ -1,7 +1,7 @@
 package org.maksim.training.mtapp.service;
 
-import org.maksim.training.mtapp.entity.Ticket;
-import org.maksim.training.mtapp.entity.User;
+import org.maksim.training.mtapp.model.Ticket;
+import org.maksim.training.mtapp.model.User;
 
 import java.math.BigDecimal;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.service;
 
-import org.maksim.training.mtapp.entity.Event;
+import org.maksim.training.mtapp.model.Event;
 
 import java.time.LocalDateTime;
 import java.util.List;

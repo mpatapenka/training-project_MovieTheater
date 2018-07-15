@@ -1,11 +1,11 @@
-package org.maksim.training.mtapp.entity.serializer.json;
+package org.maksim.training.mtapp.model.serializer.json;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
-import org.maksim.training.mtapp.entity.Auditorium;
+import org.maksim.training.mtapp.model.Auditorium;
 import org.maksim.training.mtapp.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

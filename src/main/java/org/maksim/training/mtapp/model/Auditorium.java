@@ -1,15 +1,12 @@
-package org.maksim.training.mtapp.entity;
+package org.maksim.training.mtapp.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.maksim.training.mtapp.entity.serializer.json.AuditoriumDeserializer;
+import org.maksim.training.mtapp.model.serializer.json.AuditoriumDeserializer;
 
 import java.util.Collection;
 import java.util.Set;
@@ -17,12 +14,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Builder
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@NoArgsConstructor
 @JsonDeserialize(using = AuditoriumDeserializer.class)
 public class Auditorium {
     private String name;

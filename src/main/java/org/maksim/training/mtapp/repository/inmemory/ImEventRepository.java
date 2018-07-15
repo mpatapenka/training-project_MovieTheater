@@ -1,6 +1,6 @@
 package org.maksim.training.mtapp.repository.inmemory;
 
-import org.maksim.training.mtapp.entity.Event;
+import org.maksim.training.mtapp.model.Event;
 import org.maksim.training.mtapp.repository.EventRepository;
 import org.springframework.stereotype.Repository;
 
